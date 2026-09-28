@@ -20,7 +20,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /wheels /wheels
-RUN pip install --no-cache-dir /wheels/*.whl "pydantic>=2.7" && rm -rf /wheels
+# The runtime dependencies are named rather than resolved implicitly, so what lands in the
+# image is a decision in the diff. pytest is one of them: the harness grades a Python task by
+# invoking `python -m pytest` in a sandbox, so an image without it can list and lint tasks but
+# cannot run one -- which is exactly how CI failed before pytest moved out of the dev extra.
+RUN pip install --no-cache-dir /wheels/*.whl "pydantic>=2.7" "pytest>=8" && rm -rf /wheels
 
 COPY tasks ./tasks
 
