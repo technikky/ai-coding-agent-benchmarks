@@ -1,0 +1,6 @@
+{
+  "name": "ts-001-debounce",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module"
+}

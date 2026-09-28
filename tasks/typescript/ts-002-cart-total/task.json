@@ -1,0 +1,29 @@
+{
+  "id": "ts-002-cart-total",
+  "language": "typescript",
+  "title": "Two independent defects in cart totalling: per-unit flooring and a dropped line",
+  "kind": "bug_fix",
+  "difficulty": "easy",
+  "entrypoint_files": [
+    "src/cart.ts"
+  ],
+  "fail_to_pass": [
+    "rounds the line total once rather than flooring each unit",
+    "rounds a half-cent line total up",
+    "includes the final line in the cart total",
+    "totals a cart that holds a single line"
+  ],
+  "pass_to_pass": [
+    "returns zero for an empty cart",
+    "multiplies unit price by quantity when there is no discount",
+    "applies a discount that divides evenly",
+    "treats a missing percentOff as no discount"
+  ],
+  "timeout_s": 180,
+  "tags": [
+    "frontend",
+    "rounding",
+    "off-by-one",
+    "money"
+  ]
+}

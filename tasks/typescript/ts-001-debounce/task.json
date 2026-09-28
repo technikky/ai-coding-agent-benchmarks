@@ -1,0 +1,29 @@
+{
+  "id": "ts-001-debounce",
+  "language": "typescript",
+  "title": "Fix a debounce that throttles, keeps stale arguments, and skips validation",
+  "kind": "bug_fix",
+  "difficulty": "medium",
+  "entrypoint_files": [
+    "src/debounce.ts"
+  ],
+  "fail_to_pass": [
+    "resets the pending timer when called again inside the wait window",
+    "pushes the deadline further on every call in a burst",
+    "invokes the callback with the arguments from the most recent call",
+    "throws a RangeError when waitMs is negative"
+  ],
+  "pass_to_pass": [
+    "returns a function",
+    "does not invoke the callback before the wait elapses",
+    "invokes the callback once for a single call",
+    "invokes the callback only once for a burst of calls",
+    "starts a fresh wait window after invoking"
+  ],
+  "timeout_s": 180,
+  "tags": [
+    "frontend",
+    "timers",
+    "async"
+  ]
+}

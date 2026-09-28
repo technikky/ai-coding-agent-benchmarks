@@ -1,0 +1,37 @@
+services:
+  # Validate every task: does each one fail before the fix and pass after it?
+  validate:
+    build:
+      context: .
+      target: runtime
+    image: agentbench:local
+    volumes:
+      - ./reports:/app/reports
+    command: ["validate", "--out", "reports/validation"]
+
+  # The negative control. Must resolve 0 tasks.
+  noop:
+    build:
+      context: .
+      target: runtime
+    image: agentbench:local
+    volumes:
+      - ./reports:/app/reports
+    command: ["grade", "--solver", "noop", "--expect-resolve-rate", "0.0", "--out", "reports/noop"]
+
+  # The positive control. Must resolve every task.
+  reference:
+    build:
+      context: .
+      target: runtime
+    image: agentbench:local
+    volumes:
+      - ./reports:/app/reports
+    command:
+      - grade
+      - --solver
+      - reference
+      - --expect-resolve-rate
+      - "1.0"
+      - --out
+      - reports/reference
